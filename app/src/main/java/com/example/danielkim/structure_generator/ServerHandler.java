@@ -17,9 +17,6 @@ import org.apache.http.params.HttpParams;
 
 import java.util.ArrayList;
 
-/**
- * Created by danielkim on 9/11/15.
- */
 public class ServerHandler {
 
     public static final String SERVER_ADDRESS = "http://dk.comxa.com/";

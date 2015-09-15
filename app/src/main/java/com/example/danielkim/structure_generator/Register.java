@@ -1,14 +1,16 @@
 package com.example.danielkim.structure_generator;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-/**
- * Created by danielkim on 9/10/15.
- */
 public class Register extends AppCompatActivity implements View.OnClickListener{
     Button buttonRegister;
     EditText fname, lname, email, org, pass, confirmpass;
@@ -31,6 +33,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        //AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
+
         switch (v.getId()){
             case R.id.register_button:
                 String fnameRegis = fname.getText().toString();
@@ -40,9 +44,40 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 String passRegis = pass.getText().toString();
                 String confirmpassRegis = confirmpass.getText().toString();
 
-                User user = new User (fnameRegis, lnameRegis, emailRegis, orgRegis, passRegis, confirmpassRegis);
-                registerUser(user);
-                break;
+                if (TextUtils.isEmpty(fnameRegis) || TextUtils.isEmpty(lnameRegis) || TextUtils.isEmpty(emailRegis) ||
+                        TextUtils.isEmpty(orgRegis) || TextUtils.isEmpty(passRegis) || TextUtils.isEmpty(confirmpassRegis)) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.setTitle("Incomplete form");
+                    alert.setMessage("Please complete all fields");
+                    alert.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.setCancelable(true);
+                    alert.create();
+                    alert.show();
+                } else if (!passRegis.equals(confirmpassRegis)) {
+                    AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
+                    alert2.setTitle("Password Error");
+                    alert2.setMessage("Password does not match");
+                    alert2.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert2.setCancelable(true);
+                    alert2.create();
+                    alert2.show();
+                }
+                else {
+                    User user = new User(fnameRegis, lnameRegis, emailRegis, orgRegis, passRegis, confirmpassRegis);
+                    registerUser(user);
+                    startActivity(new Intent(this, MainActivity.class));
+                    break;
+                }
         }
     }
 

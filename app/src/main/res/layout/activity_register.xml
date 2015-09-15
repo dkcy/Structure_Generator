@@ -1,0 +1,144 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_logo"
+            android:maxHeight="100dp"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="46.294dp"
+            android:id="@+id/register_fname_edit_text"
+            android:hint="First Name"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_top"
+            android:textColorHint="#c0c1c3"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="45.685dp"
+            android:id="@+id/register_lname_edit_text"
+            android:hint="Last Name"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_bottom"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColorHint="#c0c1c3"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="46.294dp"
+            android:id="@+id/register_email_edit_text"
+            android:hint="Email"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_top"
+            android:textColorHint="#c0c1c3"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="45.685dp"
+            android:id="@+id/register_org_edit_text"
+            android:hint="Organization"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_bottom"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColorHint="#c0c1c3"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="46.294dp"
+            android:id="@+id/register_password_edit_text"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_top"
+            android:textColorHint="#c0c1c3"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="45.685dp"
+            android:id="@+id/register_confirmpassword_edit_text"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_input_bottom"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColorHint="#c0c1c3"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="57.303dp"
+            android:id="@+id/register_button"
+            android:text="Register"
+            android:contentDescription="Register"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp" />
+
+
+        <!-- Register button
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="57.303dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/register_button"
+                    android:onClick="registerButtonPressed"
+                    android:contentDescription="Register"
+                    android:background="@drawable/register_button_selector" />
+        -->
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/login_loading_overlay_holder"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        android:alpha="0.4"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+</RelativeLayout>

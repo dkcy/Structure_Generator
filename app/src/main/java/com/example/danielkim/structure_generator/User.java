@@ -13,5 +13,13 @@ public class User {
         this.confirmpassword = confirmpassword;
     }
 
+    public User (String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.fname = "";
+        this.lname = "";
+        this.org = "";
+        this.confirmpassword = "";
+    }
 
 }

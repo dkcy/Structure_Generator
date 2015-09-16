@@ -1,6 +1,8 @@
 package com.example.danielkim.structure_generator;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button loginButton;
     EditText email, password;
     TextView registerLink;
+    UserLocalDB userLocalDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,37 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loginButton.setOnClickListener(this);
         registerLink.setOnClickListener(this);
-    }
 
-/* Override when menu option is available
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
-    public void loginButtonPressed(View view) {
-
-    }
-
-    public void registerButtonPressed(View view) {
-
+        userLocalDB = new UserLocalDB(this);
     }
 
     @Override
@@ -68,9 +42,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String email1 = email.getText().toString();
                 String password1 = password.getText().toString();
 
+                User user = new User(email1, password1);
+                connectUserDB(user);
+                //new AttemptLogin(email1, password1);
+
+//                userLocalDB.storeData(user);
+//                userLocalDB.setLogin(true);
+                break;
+
             case R.id.register_link:
                 startActivity(new Intent(this, Register.class));
                 break;
         }
     }
+
+    private void connectUserDB(User user) {
+        ServerHandler serverHandler = new ServerHandler();
+        serverHandler.getUserFromDB(user);
+        if (user == null) {
+            showErrorPopup();
+        } else {
+            System.out.println("Logged in user");
+            logInUser(user);
+        }
+    }
+
+    private void showErrorPopup() {
+        AlertDialog.Builder popup = new AlertDialog.Builder(MainActivity.this);
+        popup.setMessage("Incorrect username and password");
+        popup.setPositiveButton("OK", null);
+        popup.show();
+    }
+
+    private void logInUser(User user) {
+        userLocalDB.storeData(user);
+        userLocalDB.setLogin(true);
+        startActivity(new Intent(this, Home.class));
+
+    }
+//    private class AttemptLogin extends AsyncTask<Void, Void, String> {
+//        String username, password;
+//        public AttemptLogin(String username, String password) {
+//            this.username = username;
+//            this.password = password;
+//        }
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            return null;
+//        }
+//    }
 }

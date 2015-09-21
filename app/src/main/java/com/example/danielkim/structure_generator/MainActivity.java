@@ -2,17 +2,14 @@ package com.example.danielkim.structure_generator;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Callback {
 
     Button loginButton;
     EditText email, password;
@@ -31,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loginButton.setOnClickListener(this);
         registerLink.setOnClickListener(this);
-
         userLocalDB = new UserLocalDB(this);
+
     }
 
     @Override
@@ -44,10 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 User user = new User(email1, password1);
                 connectUserDB(user);
-                //new AttemptLogin(email1, password1);
 
-//                userLocalDB.storeData(user);
-//                userLocalDB.setLogin(true);
                 break;
 
             case R.id.register_link:
@@ -58,12 +52,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void connectUserDB(User user) {
         ServerHandler serverHandler = new ServerHandler();
-        serverHandler.getUserFromDB(user);
+        serverHandler.getUserFromDB(user, this);
+        }
+
+    @Override
+    public void getCallback(User user) {
+
         if (user == null) {
             showErrorPopup();
         } else {
-            System.out.println("Logged in user");
-            logInUser(user);
+            System.out.println("Logged in user " + user.email + " " + "pw: " + user.password);
+            logUserToLocalDB(user);
+            //startActivity(new Intent(this, Home.class));
         }
     }
 
@@ -74,31 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         popup.show();
     }
 
-    private void logInUser(User user) {
-        userLocalDB.storeData(user);
-        userLocalDB.setLogin(true);
+    private void logUserToLocalDB(User user) {
+        userLocalDB.storeUserDetails(user);
         startActivity(new Intent(this, Home.class));
 
     }
-//    private class AttemptLogin extends AsyncTask<Void, Void, String> {
-//        String username, password;
-//        public AttemptLogin(String username, String password) {
-//            this.username = username;
-//            this.password = password;
-//        }
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//        }
-//
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            return null;
-//        }
-//    }
+
 }

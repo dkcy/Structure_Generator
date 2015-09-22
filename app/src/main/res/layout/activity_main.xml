@@ -24,7 +24,7 @@
             android:layout_width="300dp"
             android:layout_height="46.294dp"
             android:id="@+id/login_email_edit_text"
-            android:hint="Username"
+            android:hint="Email"
             android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/login_input_top"

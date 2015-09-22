@@ -75,7 +75,7 @@ public class ServerHandler {
         @Override
         protected User doInBackground(User... users) {
             User returnedUser = null;
-            User user = users[0];
+            //User user = users[0];
 
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("email", user.email));
@@ -105,18 +105,6 @@ public class ServerHandler {
                 } else {
                     System.out.println("result is not empty and the result is: " + result);
 
-                //JSONObject userDetails = jObject.getJSONObject("result");
-//                if (jObject.length() == 0) { //(jObject.length() == 0) {
-//                    returnedUser = null;
-//                    System.out.println("jObject is: " +jObject);
-//                } else {
-
-//                    String first_name  = jArray.getString(0);
-//                    System.out.println(first_name);
-//                    String last_name = jArray.getString(1).toString();
-//                    String organization = jArray.getString(3).toString();
-//                    String confirm_password = jArray.getString(5).toString();
-
                     String first_name = jObject.getString("first_name");
                     String last_name = jObject.getString("last_name");
                     String organization = jObject.getString("organization");
@@ -126,6 +114,7 @@ public class ServerHandler {
                     returnedUser = new User(first_name, last_name, user.email, organization, user.password, confirm_password);
                     System.out.println("printing user : " + first_name + " " + last_name + " " + organization + " " + confirm_password);
                     System.out.println(returnedUser.fname + " " + returnedUser.lname);
+                    return returnedUser;
                 }
 
             } catch (Exception e){

@@ -56,19 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     @Override
-    public void getCallback(User user) {
+    public void getCallback(User returnedUser) {
 
-        if (user == null) {
+        if (returnedUser == null) {
             showErrorPopup();
         } else {
-            System.out.println("Logged in user " + user.email + " " + "pw: " + user.password);
-            logUserToLocalDB(user);
-            //startActivity(new Intent(this, Home.class));
+            System.out.println("Logged in user " + returnedUser.email + " " + "pw: " + returnedUser.password);
+            logUserToLocalDB(returnedUser);
         }
     }
 
     private void showErrorPopup() {
-        AlertDialog.Builder popup = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder popup = new AlertDialog.Builder(this);
         popup.setMessage("Incorrect username and password");
         popup.setPositiveButton("OK", null);
         popup.show();
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void logUserToLocalDB(User user) {
         userLocalDB.storeUserDetails(user);
         startActivity(new Intent(this, Home.class));
-
     }
 
 }

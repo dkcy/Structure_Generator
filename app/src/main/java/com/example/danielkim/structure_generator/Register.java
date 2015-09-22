@@ -1,7 +1,6 @@
 package com.example.danielkim.structure_generator;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,7 +82,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
     private void registerUser(User user){
         ServerHandler serverHandler = new ServerHandler();
-//      ServerHandler serverHandler = new ServerHandler(this);
         serverHandler.registerToDatabase(user);
     }
 }

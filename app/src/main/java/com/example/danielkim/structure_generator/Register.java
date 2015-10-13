@@ -1,6 +1,7 @@
 package com.example.danielkim.structure_generator;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Register extends AppCompatActivity implements View.OnClickListener{
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Register extends AppCompatActivity implements View.OnClickListener, RegisterResponse{
     Button buttonRegister;
     EditText fname, lname, email, org, pass, confirmpass;
-
+    private Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+            "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    private Matcher matcher;
+    private boolean dupEmail;
+    //private static final String EMAIL_REGEX = ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,18 +78,83 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                     alert2.setCancelable(true);
                     alert2.create();
                     alert2.show();
-                }
-                else {
+                } else if (!validateEmail(emailRegis)){
+                    AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
+                    alert2.setTitle("Invalid Email");
+                    alert2.setMessage("Please enter a valid email");
+                    alert2.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert2.setCancelable(true);
+                    alert2.create();
+                    alert2.show();
+//                } else if (getDupEmail() == true) {
+//                    System.out.println("OOOOOOOOOOO" + dupEmail);
+//                    AlertDialog.Builder popup = new AlertDialog.Builder(this);
+//                    popup.setMessage("Email already exists");
+//                    popup.setPositiveButton("OK", null);
+//                    popup.create();
+//                    popup.show();
+                } else {
                     User user = new User(fnameRegis, lnameRegis, emailRegis, orgRegis, passRegis, confirmpassRegis);
                     registerUser(user);
+//                    break;
+                }
+                if (getDupEmail() != true) {
+                    AlertDialog.Builder popup = new AlertDialog.Builder(this);
+                    popup.setTitle("Invalid Email");
+                    popup.setMessage("Email already exists");
+                    popup.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    popup.setCancelable(true);
+                    popup.create();
+                    popup.show();
+                    System.out.println("%%%%%%%");
+                } else {
                     startActivity(new Intent(this, MainActivity.class));
-                    break;
                 }
         }
     }
 
     private void registerUser(User user){
-        ServerHandler serverHandler = new ServerHandler();
-        serverHandler.registerToDatabase(user);
+        ServerHandler serverHandler = new ServerHandler(this);
+        serverHandler.registerToDatabase(user, this);
+    }
+
+    private boolean validateEmail(String email) {
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    @Override
+    public void getRegisterResponse(String num) {
+        String x = num.substring(0,1);
+        //System.out.println("XXXXXXXXXX " + num + " XXX " + x);
+        if (x.equals("2")) {
+            //showErrorPopup();
+            System.out.println("11111111 " + dupEmail);
+            setDupEmail();
+            System.out.println("22222222 " + dupEmail);
+
+//            dupEmail = true;
+        } else {
+            System.out.println("@@@@@@@@@ " + num + "......");
+        }
+    }
+
+    public boolean setDupEmail() {
+        this.dupEmail = true;
+        return dupEmail;
+    }
+
+    public boolean getDupEmail() {
+        return dupEmail;
     }
 }

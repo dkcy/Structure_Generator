@@ -1,5 +1,6 @@
 package com.example.danielkim.structure_generator;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
@@ -23,9 +24,17 @@ public class ServerHandler {
     public static final String SERVER_ADDRESS = "http://dk.comxa.com/";
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     User user;
+    RegisterResponse registerResponse;
     Callback callback;
+    Context context;
 
-    public void registerToDatabase(User user) {
+    public ServerHandler(Context context){
+        this.context = context;
+    }
+
+    public void registerToDatabase(User user, RegisterResponse registerResponse) {
+        this.user = user;
+        this.registerResponse = registerResponse;
         new RegisterUserAsyncTask(user).execute();
     }
 
@@ -33,17 +42,16 @@ public class ServerHandler {
         this.user = user;
         this.callback = callback;
         new GetUserAsyncTask().execute(user);
-        //return user;
     }
-    public class RegisterUserAsyncTask extends AsyncTask <Void, Void, Void> {
+
+    public class RegisterUserAsyncTask extends AsyncTask <Void, Void, String> {
         User user;
 
         public RegisterUserAsyncTask(User user) {
             this.user = user;
         }
-
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             //Arraylist data server can read
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("first_name", user.fname));
@@ -57,16 +65,33 @@ public class ServerHandler {
 
             //Setup client to make request to server
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "Register.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "EmailCheck.php");
 
             try {
                 //Data URL encoded
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
-                client.execute(post);
+                HttpResponse httpsResponse = client.execute(post);
+                HttpEntity entity = httpsResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                //JSONObject jObject = new JSONObject(result);
+                System.out.println(result);
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            registerResponse.getRegisterResponse(s);
+
+            String x = s.substring(0,1);
+            System.out.println("========= " + x.length());
+            if (x.equals("2")) {
+                System.out.println("!!!!!!!!! " + x);
+            }
         }
     }
 

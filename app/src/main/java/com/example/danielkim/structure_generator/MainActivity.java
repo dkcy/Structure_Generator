@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void connectUserDB(User user) {
-        ServerHandler serverHandler = new ServerHandler();
+        ServerHandler serverHandler = new ServerHandler(this);
         serverHandler.getUserFromDB(user, this);
         }
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showErrorPopup() {
         AlertDialog.Builder popup = new AlertDialog.Builder(this);
-        popup.setMessage("Incorrect username and password");
+        popup.setMessage("Invalid username and password");
         popup.setPositiveButton("OK", null);
         popup.show();
     }

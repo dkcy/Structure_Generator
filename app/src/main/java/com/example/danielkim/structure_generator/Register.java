@@ -1,7 +1,6 @@
 package com.example.danielkim.structure_generator;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,13 +90,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                     alert2.setCancelable(true);
                     alert2.create();
                     alert2.show();
-//                } else if (getDupEmail() == true) {
-//                    System.out.println("OOOOOOOOOOO" + dupEmail);
-//                    AlertDialog.Builder popup = new AlertDialog.Builder(this);
-//                    popup.setMessage("Email already exists");
-//                    popup.setPositiveButton("OK", null);
-//                    popup.create();
-//                    popup.show();
                 } else {
                     User user = new User(fnameRegis, lnameRegis, emailRegis, orgRegis, passRegis, confirmpassRegis);
                     registerUser(user);
@@ -136,14 +128,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void getRegisterResponse(String num) {
         String x = num.substring(0,1);
-        //System.out.println("XXXXXXXXXX " + num + " XXX " + x);
         if (x.equals("2")) {
-            //showErrorPopup();
             System.out.println("11111111 " + dupEmail);
             setDupEmail();
             System.out.println("22222222 " + dupEmail);
 
-//            dupEmail = true;
         } else {
             System.out.println("@@@@@@@@@ " + num + "......");
         }

@@ -1,47 +1,66 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg1">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:background="@drawable/bg1"
+    android:layout_alignParentTop="true">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/login_logo"
-            android:maxHeight="121dp"
+            android:id="@+id/image"
+            android:maxHeight="95dp"
             android:adjustViewBounds="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"/>
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/greeting"
             android:text="Welcome"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20dp"/>
+            android:layout_marginTop="25dp"
+            android:textSize="20dp"
+            android:layout_below="@+id/image"
+            android:layout_centerHorizontal="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/loggedInUser"
-            android:layout_marginTop="10dp"
             android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
             android:textColorHint="#c0c1c3"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"/>
-        <Button
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/greeting"
+            android:layout_centerHorizontal="true"/>
+
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/logout_button"
             android:text="Logout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/createroster_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"/>
+            android:text="Create New Roster" />
+        <Button
+            android:id="@+id/editroster_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Edit Roster" />
+
     </LinearLayout>
- </RelativeLayout>
+</RelativeLayout>

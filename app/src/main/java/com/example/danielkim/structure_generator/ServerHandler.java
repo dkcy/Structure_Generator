@@ -62,8 +62,8 @@ public class ServerHandler {
             dataToSend.add(new BasicNameValuePair("confirm_password", user.confirmpassword));
 
             HttpParams httpRequestParams = getHttpRequestParams();
-
             //Setup client to make request to server
+
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "EmailCheck.php");
 
@@ -74,25 +74,26 @@ public class ServerHandler {
                 HttpEntity entity = httpsResponse.getEntity();
                 String result = EntityUtils.toString(entity);
                 //JSONObject jObject = new JSONObject(result);
-                System.out.println(result);
-                return result;
+                System.out.println("******* " + result);
+                registerResponse.getRegisterResponse(result);
+                //return result;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            registerResponse.getRegisterResponse(s);
-
-            String x = s.substring(0,1);
-            System.out.println("========= " + x.length());
-            if (x.equals("2")) {
-                System.out.println("!!!!!!!!! " + x);
-            }
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            registerResponse.getRegisterResponse(s);
+//
+//            String x = s.substring(0,1);
+//            System.out.println("========= " + x.length());
+//            if (x.equals("2")) {
+//                System.out.println("!!!!!!!!! " + x);
+//            }
+//        }
     }
 
     public class GetUserAsyncTask extends AsyncTask<User, Void, User> {

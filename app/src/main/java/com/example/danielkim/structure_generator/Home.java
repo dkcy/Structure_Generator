@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
     TextView loggedUserFN;
-    Button bLogout;
+    Button bCreate, bEdit, bLogout;
     UserLocalDB userLocalDB;
 
     @Override
@@ -20,10 +20,15 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         loggedUserFN = (TextView) findViewById(R.id.loggedInUser);
 
+        bCreate = (Button) findViewById(R.id.createroster_button);
+        bEdit = (Button) findViewById(R.id.editroster_button);
+
         bLogout = (Button) findViewById(R.id.logout_button);
 
         bLogout.setOnClickListener(this);
         userLocalDB = new UserLocalDB(this);
+
+
     }
 
     @Override
@@ -38,8 +43,16 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.logout_button){
-            startActivity(new Intent(this, MainActivity.class));
+        switch (v.getId()) {
+            case R.id.logout_button:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.createroster_button:
+                startActivity(new Intent(this, CreateRoster.class));
+                break;
+            case R.id.editroster_button:
+                //startActivity(new Intent(this, EditRoster.class));
+                break;
         }
     }
 

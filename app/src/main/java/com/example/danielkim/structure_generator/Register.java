@@ -13,6 +13,7 @@ import android.widget.EditText;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class Register extends AppCompatActivity implements View.OnClickListener, RegisterResponse{
     Button buttonRegister;
     EditText fname, lname, email, org, pass, confirmpass;
@@ -47,7 +48,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                 String lnameRegis = lname.getText().toString();
                 String emailRegis = email.getText().toString();
                 String orgRegis = org.getText().toString();
+//                String passBeforeEncryp = pass.getText().toString();
+//                String passRegis = Base64.encodeToString(passBeforeEncryp.getBytes(), Base64.DEFAULT);
                 String passRegis = pass.getText().toString();
+
+//                String passConBeforeEncryp = confirmpass.getText().toString();
+//                String confirmpassRegis = Base64.encodeToString(passConBeforeEncryp.getBytes(), Base64.DEFAULT);
                 String confirmpassRegis = confirmpass.getText().toString();
 
                 if (TextUtils.isEmpty(fnameRegis) || TextUtils.isEmpty(lnameRegis) || TextUtils.isEmpty(emailRegis) ||
@@ -92,25 +98,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                     alert2.show();
                 } else {
                     User user = new User(fnameRegis, lnameRegis, emailRegis, orgRegis, passRegis, confirmpassRegis);
+                    System.out.println("User created");
                     registerUser(user);
+                    System.out.println("User passed into registerUser");
+                    System.out.println(dupEmail);
+                    System.out.println("dupEmail BEFORE checkDupEmail method");
+//                    checkDupEmail();
+//                    System.out.println("checkDupEmail method");
+//                    System.out.println(dupEmail);
+//                    System.out.println("dupEmail AFTER checkDupEmail method");
+
 //                    break;
-                }
-                if (getDupEmail() != true) {
-                    AlertDialog.Builder popup = new AlertDialog.Builder(this);
-                    popup.setTitle("Invalid Email");
-                    popup.setMessage("Email already exists");
-                    popup.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    popup.setCancelable(true);
-                    popup.create();
-                    popup.show();
-                    System.out.println("%%%%%%%");
-                } else {
-                    startActivity(new Intent(this, MainActivity.class));
                 }
         }
     }
@@ -125,21 +123,63 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         return matcher.matches();
     }
 
+//    private void checkDupEmail() {
+//        System.out.println("INSIDE checkDupEmail method");
+//        if (getDupEmail() == true) {
+//            startActivity(new Intent(this, MainActivity.class));
+//        } else {
+//            AlertDialog.Builder popup = new AlertDialog.Builder(this);
+//            popup.setTitle("Invalid Email");
+//            popup.setMessage("Email already exists");
+//            popup.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
+//            popup.setCancelable(true);
+//            popup.create();
+//            popup.show();
+//            System.out.println("%%%%%%%");
+//        }
+//    }
     @Override
     public void getRegisterResponse(String num) {
+        System.out.println("INSIDE getRegisterResponse");
         String x = num.substring(0,1);
         if (x.equals("2")) {
             System.out.println("11111111 " + dupEmail);
-            setDupEmail();
+            setDupEmail(false);
+//            checkDupEmail();
             System.out.println("22222222 " + dupEmail);
-
+            Register.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog.Builder popup = new AlertDialog.Builder(Register.this);
+                    popup.setTitle("Invalid Email");
+                    popup.setMessage("Email already exists");
+                    popup.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    popup.setCancelable(true);
+                    popup.create();
+                    popup.show();
+                    System.out.println("%%%%%%%");
+                }
+            });
         } else {
-            System.out.println("@@@@@@@@@ " + num + "......");
+            System.out.println("@@@@@@@@@ " + x + " " + x.length());
+            setDupEmail(true);
+            startActivity(new Intent(this, MainActivity.class));
+//            checkDupEmail();
         }
     }
 
-    public boolean setDupEmail() {
-        this.dupEmail = true;
+    public boolean setDupEmail(boolean bool) {
+        this.dupEmail = bool;
         return dupEmail;
     }
 

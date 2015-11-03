@@ -1,0 +1,63 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="."
+    android:background="@drawable/bg1">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_logo"
+        android:maxHeight="121dp"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomeid"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/greeting"
+            android:text="Welcome"
+            android:textSize="20sp"
+/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loggedInUser"
+            android:text="Test"
+            android:textSize="20sp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:textColorHint="#c0c1c3"/>
+    </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/question"
+            android:text="How many groups do you have?"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:layout_below="@+id/welcomeid"
+            android:layout_centerHorizontal="true"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:spinnerMode="dropdown"
+            android:layout_below="@+id/question"
+            />
+
+</RelativeLayout>
